@@ -1,30 +1,34 @@
-﻿pipeline {
+﻿properties([pipelineTriggers([githubPush()])])
+
+pipeline {
     agent {
         docker { image 'mcr.microsoft.com/dotnet/sdk:6.0' }
     }
 
-     // this section configures Jenkins options
     options {
-
-        // only keep 10 logs for no more than 10 days
-        buildDiscarder(logRotator(daysToKeepStr: '10', numToKeepStr: '10'))
-
-        // cause the build to time out if it runs for more than 12 hours
+        buildDiscarder logRotator(artifactDaysToKeepStr: '5', artifactNumToKeepStr: '5', daysToKeepStr: '5', numToKeepStr: '5')
         timeout(time: 12, unit: 'HOURS')
-
-        // add timestamps to the log
         timestamps()
     }
 
-  // this section configures triggers
     triggers {
-          // create a cron trigger that will run the job every day at midnight
-          // note that the time is based on the time zone used by the server
-          // where Jenkins is running, not the user's time zone
           cron '@midnight'
     }
 
     stages {
+        /* checkout repo */
+        stage('Checkout SCM') {
+            steps {
+                checkout([
+                 $class: 'GitSCM',
+                 branches: [[name: 'main']],
+                 userRemoteConfigs: [[
+                    url: 'https://github.com/mabubakarriaz/CAPSrage.git',
+                    credentialsId: '',
+                 ]]
+                ])
+            }
+        }
         stage('Source') {
             steps {
                 sh 'dotnet --version'
