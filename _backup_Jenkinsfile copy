@@ -59,9 +59,9 @@ pipeline {
                 echo 'Reporting....'
             }
         }
-       
         stage('Docker Build') {
             steps {
+                echo "${env.PATH}"
                 sh 'docker build -t mabubakarriaz/CAPSrage:latest .'
             }
         }   
