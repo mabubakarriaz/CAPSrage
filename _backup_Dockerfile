@@ -1,0 +1,11 @@
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+RUN mkdir app
+RUN cd app
+WORKDIR /app
+RUN mkdir build
+ADD bin/Release/net6.0/* /app/build
+WORKDIR /app/build
+RUN echo $(ls -1 /app/build)
+CMD "dotnet CAPSrage.dll"
+

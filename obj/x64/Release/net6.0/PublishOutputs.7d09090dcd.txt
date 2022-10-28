@@ -1,0 +1,5 @@
+C:\TFS\github.com\mabubakarriaz\CAPSrage\bin\x64\Release\net6.0\publish\CAPSrage.exe
+C:\TFS\github.com\mabubakarriaz\CAPSrage\bin\x64\Release\net6.0\publish\CAPSrage.dll
+C:\TFS\github.com\mabubakarriaz\CAPSrage\bin\x64\Release\net6.0\publish\CAPSrage.deps.json
+C:\TFS\github.com\mabubakarriaz\CAPSrage\bin\x64\Release\net6.0\publish\CAPSrage.runtimeconfig.json
+C:\TFS\github.com\mabubakarriaz\CAPSrage\bin\x64\Release\net6.0\publish\CAPSrage.pdb

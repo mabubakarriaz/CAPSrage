@@ -19,6 +19,7 @@ pipeline {
 
         stage('Branch Check-in') {
             steps {
+                echo "${env.WORKSPACE}"
                 checkout([
                  $class: 'GitSCM',
                  branches: [[name: 'main']],
@@ -29,6 +30,7 @@ pipeline {
 
         stage('Source') {
             steps {
+                echo "${env.WORKSPACE}"
                 sh 'dotnet --version'
                 sh 'git --version'
                 git branch: 'main', url: 'https://github.com/mabubakarriaz/CAPSrage.git'
@@ -41,28 +43,38 @@ pipeline {
                     DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
                     } 
             steps {
-                sh "dotnet build 'CAPSrage.csproj' -c Release"
+                echo "${env.WORKSPACE}"
+                sh "dotnet publish -p:PublishProfile=FolderProfile"
             }
         }
         stage('Test') {
             steps {
+                echo "${env.WORKSPACE}"
                 echo 'Testing..'
             }
         }
         stage('Report') {
             steps {
+                echo "${env.WORKSPACE}"
                 echo 'Reporting....'
             }
         }
+        stage('Docker Build') {
+            steps {
+                echo "${env.WORKSPACE}"
+                sh 'docker build -t mabubakarriaz/CAPSrage:latest .'
+            }
+        }   
+
         
-        }
+    }
 
     post {
         // the always stage will always be run
         always {
-
+            echo "${env.WORKSPACE}"
             echo "Creating artifacts..."
-            archiveArtifacts artifacts: "bin/Release/net6.0/*.*", followSymlinks: false
+            archiveArtifacts artifacts: "bin/x64/Release/net6.0/publish/*.*", followSymlinks: false
         }
     }
 }
