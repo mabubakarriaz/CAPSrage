@@ -16,40 +16,32 @@ pipeline {
     }
 
     stages {
-        /* checkout repo --commens*/
-        stage('Checkout SCM') {
+
+        stage('Branch Check-in') {
             steps {
                 checkout([
                  $class: 'GitSCM',
                  branches: [[name: 'main']],
-                 userRemoteConfigs: [[
-                    url: 'https://github.com/mabubakarriaz/CAPSrage.git',
-                    credentialsId: '',
-                 ]]
+                 userRemoteConfigs: [[url: 'https://github.com/mabubakarriaz/CAPSrage.git', credentialsId: '',]]
                 ])
             }
         }
+
         stage('Source') {
             steps {
                 sh 'dotnet --version'
                 sh 'git --version'
-                git branch: 'main',
-                    url: 'https://github.com/mabubakarriaz/CAPSrage.git'
+                git branch: 'main', url: 'https://github.com/mabubakarriaz/CAPSrage.git'
             }
         }
         
-        stage('Requirements') {
-            steps {
-                echo 'Installing requirements...'
-            }
-        }
         stage('Build') {
           environment {
                     HOME = '/tmp'
                     DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
                     } 
             steps {
-                sh "dotnet build 'CAPSrage.csproj' -c Release -o ${env.WORKSPACE}/app/build"
+                sh "dotnet build 'CAPSrage.csproj' -c Release"
             }
         }
         stage('Test') {
@@ -57,12 +49,6 @@ pipeline {
                 echo 'Testing..'
             }
         }
-        stage('artifacts') {
-            steps {
-                echo "Hi there its done"
-                archiveArtifacts artifacts: "bin/Release/net6.0/publish/*.*", followSymlinks: false
-                }
-            }
         stage('Report') {
             steps {
                 echo 'Reporting....'
@@ -70,16 +56,13 @@ pipeline {
         }
         
         }
-    // the post section is a special collection of stages
-    // that are run after all other stages have completed
-    post {
 
+    post {
         // the always stage will always be run
         always {
 
-            // the always stage can contain build steps like other stages
-            // a "steps{...}" section is not needed.
-            echo "This step will run after all other steps have finished.  It will always run, even in the status of the build is not SUCCESS"
+            echo "Creating artifacts..."
+            archiveArtifacts artifacts: "bin/Release/net6.0/*.*", followSymlinks: false
         }
     }
 }

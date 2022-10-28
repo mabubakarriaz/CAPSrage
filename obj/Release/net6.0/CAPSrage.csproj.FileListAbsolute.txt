@@ -13,3 +13,8 @@ C:\TFS\github.com\mabubakarriaz\CAPSrage\obj\Release\net6.0\refint\CAPSrage.dll
 C:\TFS\github.com\mabubakarriaz\CAPSrage\obj\Release\net6.0\CAPSrage.pdb
 C:\TFS\github.com\mabubakarriaz\CAPSrage\obj\Release\net6.0\CAPSrage.genruntimeconfig.cache
 C:\TFS\github.com\mabubakarriaz\CAPSrage\obj\Release\net6.0\ref\CAPSrage.dll
+C:\app\build\CAPSrage.exe
+C:\app\build\CAPSrage.deps.json
+C:\app\build\CAPSrage.runtimeconfig.json
+C:\app\build\CAPSrage.dll
+C:\app\build\CAPSrage.pdb
