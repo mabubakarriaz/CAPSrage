@@ -61,7 +61,7 @@ pipeline {
         }
         stage('Docker Build') {
             agent {
-                dockerfile true
+                dockerfile {filename 'Dockerfile'}
             }
             steps {
                 echo "${env.PATH}"
