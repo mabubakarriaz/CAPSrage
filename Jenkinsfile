@@ -16,7 +16,7 @@ pipeline {
     }
 
     stages {
-        /* checkout repo */
+        /* checkout repo --commens*/
         stage('Checkout SCM') {
             steps {
                 checkout([
