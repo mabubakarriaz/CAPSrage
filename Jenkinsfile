@@ -60,6 +60,9 @@ pipeline {
             }
         }
         stage('Docker Build') {
+            agent {
+                dockerfile true
+            }
             steps {
                 echo "${env.PATH}"
                 sh 'docker build -t mabubakarriaz/CAPSrage:latest .'
