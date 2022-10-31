@@ -51,27 +51,28 @@ pipeline {
                 sh "dotnet publish -p:PublishProfile=FolderProfile"
             }
         }
-        stage('Test') {
-            agent any
-            steps {
-                echo "${env.PATH}"
-                echo 'Testing..'
+        stage('Code Quality') {
+            agent {
+                 docker { image 'mcr.microsoft.com/dotnet/sdk:6.0' }
             }
-        }
-        stage('Report') {
-            agent any
+            environment {
+                    HOME = '/tmp'
+                    DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
+            } 
             steps {
-                echo "${env.PATH}"
-                echo 'Reporting....'
+                echo "${env.PATH}"    
+                sh 'export PATH="$PATH:$HOME/.dotnet/tools"'        
+                sh 'dotnet tool install dotnet-sonarscanner --global'
+                sh 'dotnet /tmp/DOTNET_CLI_HOME/.dotnet/tools/sonarscanner begin /k:"CapsRage" /d:sonar.host.url="http://52.183.213.217:9000"  /d:sonar.login="sqp_9dcae23d11b429e5e632c6f7fd4b46336de8402b"'
+                sh 'dotnet build'
+                sh 'dotnet /tmp/DOTNET_CLI_HOME/.dotnet/tools/sonarscanner end /d:sonar.login="sqp_9dcae23d11b429e5e632c6f7fd4b46336de8402b"'
             }
         }
        
         stage('Docker Build') {
             agent any
             steps {       
-                dir("/var/jenkins_home/workspace/CAPSrage-docker") {
-                        sh "docker build -t abubakarriaz/capsrage:$env.BUILD_NUMBER ."
-                }    
+                sh "docker build -t abubakarriaz/capsrage:$env.BUILD_NUMBER ."    
             }
         }   
 
@@ -85,20 +86,19 @@ pipeline {
                 sh "docker push abubakarriaz/capsrage:$env.BUILD_NUMBER"  
                 sh "docker save abubakarriaz/capsrage:$env.BUILD_NUMBER -o CAPSrage_image.gz" 
             }
-        }   
-    }
+        }  
 
-    post {       
-        // the always stage will always be run
-        always {
-            dir('/var/jenkins_home/workspace/CAPSrage-docker@2'){
+        stage('Archive') {
+            agent any
+            steps {       
                 echo "${env.PATH}"
                 echo "${env.WORKSPACE}"
                 echo "Creating artifacts..."
-                archiveArtifacts artifacts: "bin/x64/Release/net6.0/publish/*.*", followSymlinks: false
+                archiveArtifacts artifacts: "bin/x64/Release/net6.0/publish/**.*", followSymlinks: false
                 archiveArtifacts artifacts: "*.gz", followSymlinks: false
-            } 
-        }
+            }
+        }   
+
     }
 
 }
