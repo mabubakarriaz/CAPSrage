@@ -1,7 +1,10 @@
 ﻿properties([pipelineTriggers([githubPush()])])
 
 pipeline {
-    agent none
+    agent any
+    environment {
+		DOCKERHUB_CREDENTIALS=credentials('docker-hub-abubakarriaz')
+	}
     options {
         buildDiscarder logRotator(artifactDaysToKeepStr: '5', artifactNumToKeepStr: '5', daysToKeepStr: '5', numToKeepStr: '5')
         timeout(time: 12, unit: 'HOURS')
@@ -59,7 +62,7 @@ pipeline {
             }
         }
         stage('Report') {
-             agent any
+            agent any
             steps {
                 echo "${env.PATH}"
                 echo 'Reporting....'
@@ -70,15 +73,22 @@ pipeline {
             agent any
             steps {       
                 dir("/var/jenkins_home/workspace/CAPSrage-docker") {
-                        sh 'docker build -t mabubakarriaz/CAPSrage:latest .'
+                        sh 'docker build -t abubakarriaz/capsrage:latest .'
                     }    
             }
         }   
 
-        
+         stage('Docker push') {         
+            agent any
+            steps {       
+                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                sh "docker push abubakarriaz/capsrage:latest"  
+            }
+        }   
     }
 
     post {
+        
         // the always stage will always be run
         always {
             echo "${env.PATH}"
