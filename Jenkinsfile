@@ -1,10 +1,7 @@
 ﻿properties([pipelineTriggers([githubPush()])])
 
 pipeline {
-    agent {
-        docker { image 'mcr.microsoft.com/dotnet/sdk:6.0' }
-    }
-
+    agent none
     options {
         buildDiscarder logRotator(artifactDaysToKeepStr: '5', artifactNumToKeepStr: '5', daysToKeepStr: '5', numToKeepStr: '5')
         timeout(time: 12, unit: 'HOURS')
@@ -18,6 +15,7 @@ pipeline {
     stages {
 
         stage('Branch Check-in') {
+            agent any
             steps {
                 echo "${env.PATH}"
                 checkout([
@@ -29,6 +27,9 @@ pipeline {
         }
 
         stage('Source') {
+            agent {
+                 docker { image 'mcr.microsoft.com/dotnet/sdk:6.0' }
+                }
             steps {
                 echo "${env.PATH}"
                 sh 'dotnet --version'
@@ -38,6 +39,9 @@ pipeline {
         }
         
         stage('Build') {
+            agent {
+                 docker { image 'mcr.microsoft.com/dotnet/sdk:6.0' }
+                }
           environment {
                     HOME = '/tmp'
                     DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
@@ -48,12 +52,14 @@ pipeline {
             }
         }
         stage('Test') {
+            agent any
             steps {
                 echo "${env.PATH}"
                 echo 'Testing..'
             }
         }
         stage('Report') {
+             agent any
             steps {
                 echo "${env.PATH}"
                 echo 'Reporting....'
@@ -61,8 +67,11 @@ pipeline {
         }
        
         stage('Docker Build') {
-            steps {
-                sh 'docker build -t mabubakarriaz/CAPSrage:latest .'
+            agent any
+            steps {       
+                dir("/var/jenkins_home/workspace/CAPSrage-docker") {
+                        sh 'docker build -t mabubakarriaz/CAPSrage:latest .'
+                    }    
             }
         }   
 
