@@ -64,11 +64,11 @@ pipeline {
             } 
             steps {
                 echo "${env.PATH}"   
-                sh 'chmod -R 777 /opt/sonar-scanner-msbuild'
+                //sh 'chmod -R 777 /opt/sonar-scanner-msbuild'
                 //sh "dotnet tool install dotnet-sonarscanner --tool-path /tmp/DOTNET_CLI_HOME/.dotnet/tools --version 5.7.1"
-                sh 'dotnet sonarscanner begin /k:"CapsRage" /d:sonar.host.url="http://20.237.254.87:9000" /d:sonar.login="sqp_9cee5034550e24e3cdf92b32436fdd76f7f4c689"'
+                sh 'dotnet sonarscanner begin /k:"CapsRage" /d:sonar.host.url="http://20.245.229.158:9000"  /d:sonar.login="sqp_81f4fba1089a0e97412bf7c499acece56decf130"'
                 sh 'dotnet build'
-                sh 'dotnet sonarscanner end /d:sonar.login="sqp_9cee5034550e24e3cdf92b32436fdd76f7f4c689"'
+                sh 'dotnet sonarscanner end /d:sonar.login="sqp_81f4fba1089a0e97412bf7c499acece56decf130"'
             }
         }
 
