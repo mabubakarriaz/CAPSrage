@@ -57,15 +57,21 @@ pipeline {
                  docker { image 'mcr.microsoft.com/dotnet/sdk:6.0' }
             }
             environment {
-                    HOME = '/tmp'
+                    //HOME = '/tmp'
                     DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
-                    SCANNER_HOME = "$DOTNET_CLI_HOME/.dotnet/tools"
+                    SCANNER_HOME = "$env.WORKSPACE$DOTNET_CLI_HOME/.dotnet/tools"
                     PATH="$SCANNER_HOME:$PATH"
             } 
             steps {
                 echo "${env.PATH}"   
                 sh 'ls -lah'
+                //sh 'whoami' // whoami: cannot find name for user ID 1000
                 sh 'pwd'
+                sh "chmod -R 777 $env.WORKSPACE$DOTNET_CLI_HOME/.dotnet"
+                sh 'dotnet tool list -g'
+                sh "dotnet tool list --tool-path $SCANNER_HOME"
+                //sh 'chmod -R 777 /opt/sonar-scanner-msbuild'
+                //sh "dotnet tool install dotnet-sonarscanner --tool-path $SCANNER_HOME --version 5.7.1"
                 sh 'dotnet sonarscanner begin /k:"CapsRage" /d:sonar.host.url="http://20.245.229.158:9000"  /d:sonar.login="sqp_81f4fba1089a0e97412bf7c499acece56decf130"'
                 sh 'dotnet build'
                 sh 'dotnet sonarscanner end /d:sonar.login="sqp_81f4fba1089a0e97412bf7c499acece56decf130"'
