@@ -56,7 +56,7 @@ pipeline {
             agent {
                  docker { 
                     image 'mcr.microsoft.com/dotnet/sdk:6.0-focal' 
-                    args '-v /opt/java/openjdk/bin/java:/usr/bin/java'
+                    //args '-v /opt/java/openjdk/bin/java:/usr/bin/java'
                  }
             }
             environment {
@@ -68,7 +68,7 @@ pipeline {
                 echo "${env.PATH}"  
                 //sh 'apt -y update'
                 //sh 'apt install --yes openjdk-11-jre'
-                sh 'java -version'
+                //sh 'java -version'
                 sh 'dotnet tool uninstall dotnet-sonarscanner --tool-path $SCANNER_HOME' 
                 sh 'dotnet tool install dotnet-sonarscanner --version 5.7.1 --tool-path $SCANNER_HOME'
                 sh 'dotnet tool list --tool-path $SCANNER_HOME' 
