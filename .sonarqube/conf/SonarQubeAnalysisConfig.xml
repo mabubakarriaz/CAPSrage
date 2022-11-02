@@ -5,9 +5,9 @@
   <SonarBinDir>C:\TFS\github.com\mabubakarriaz\CAPSrage\.sonarqube\bin</SonarBinDir>
   <SonarScannerWorkingDirectory>C:\TFS\github.com\mabubakarriaz\CAPSrage</SonarScannerWorkingDirectory>
   <HasBeginStepCommandLineCredentials>true</HasBeginStepCommandLineCredentials>
-  <SonarQubeHostUrl>http://20.237.254.87:9000</SonarQubeHostUrl>
+  <SonarQubeHostUrl>http://20.29.34.154:9000</SonarQubeHostUrl>
   <SonarQubeVersion>9.7.1.62043</SonarQubeVersion>
-  <SonarProjectKey>CapsRage</SonarProjectKey>
+  <SonarProjectKey>CAPSrage</SonarProjectKey>
   <AdditionalConfig>
     <ConfigSetting Id="BuildUri" />
     <ConfigSetting Id="TfsUri" />
@@ -111,11 +111,11 @@
     <Property Name="sonar.auth.gitlab.url">https://gitlab.com</Property>
     <Property Name="sonaranalyzer-vbnet.pluginKey">vbnet</Property>
     <Property Name="sonar.updatecenter.url">https://update.sonarsource.org/update-center.properties</Property>
-    <Property Name="sonar.core.startTime">01/11/2022 12:08:36 pm</Property>
-    <Property Name="sonar.core.id">147B411E-AYQyBUta9e-9QgwZUry-</Property>
+    <Property Name="sonar.core.startTime">02/11/2022 11:41:25 am</Property>
+    <Property Name="sonar.core.id">147B411E-AYQ3EsS-6DTWsKffxHj7</Property>
   </ServerSettings>
   <LocalSettings>
-    <Property Name="sonar.host.url">http://20.237.254.87:9000</Property>
+    <Property Name="sonar.host.url">http://20.29.34.154:9000</Property>
   </LocalSettings>
   <AnalyzersSettings>
     <AnalyzerSettings>

@@ -1,6 +1,6 @@
-projectKey=CapsRage
-serverUrl=http://20.237.254.87:9000
+projectKey=CAPSrage
+serverUrl=http://20.29.34.154:9000
 serverVersion=9.7.1.62043
-dashboardUrl=http://20.237.254.87:9000/dashboard?id=CapsRage
-ceTaskId=AYQyt6P09e-9QgwZU1hQ
-ceTaskUrl=http://20.237.254.87:9000/api/ce/task?id=AYQyt6P09e-9QgwZU1hQ
+dashboardUrl=http://20.29.34.154:9000/dashboard?id=CAPSrage
+ceTaskId=AYQ3cU0T6DTWsKffxRSM
+ceTaskUrl=http://20.29.34.154:9000/api/ce/task?id=AYQ3cU0T6DTWsKffxRSM

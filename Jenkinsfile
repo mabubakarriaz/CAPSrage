@@ -54,7 +54,7 @@ pipeline {
 
         stage('Code Quality') {
             agent {
-                 docker { image 'mcr.microsoft.com/dotnet/sdk:6.0' }
+                 docker { image 'mcr.microsoft.com/dotnet/sdk:6.0-focal' }
             }
             environment {
                     HOME = '/tmp'
@@ -64,15 +64,14 @@ pipeline {
             } 
             steps {
                 echo "${env.PATH}"   
-                sh 'ls -lah'
-                sh 'pwd'
-                sh 'dotnet sonarscanner begin /k:"CapsRage" /d:sonar.host.url="http://20.245.229.158:9000"  /d:sonar.login="sqp_81f4fba1089a0e97412bf7c499acece56decf130"'
+                sh 'dotnet tool install -g dotnet-sonarscanner --version 5.7.1'
+                sh 'export PATH="$PATH:/$DOTNET_CLI_HOME/.dotnet/tools"'
+                sh 'dotnet sonarscanner begin /k:"CAPSrage" /d:sonar.host.url="http://20.29.34.154:9000"  /d:sonar.login="sqp_a46efcb94297400f5e4c1c3f34c32431b107df69"'
                 sh 'dotnet build'
-                sh 'dotnet sonarscanner end /d:sonar.login="sqp_81f4fba1089a0e97412bf7c499acece56decf130"'
+                sh 'dotnet sonarscanner end /d:sonar.login="sqp_a46efcb94297400f5e4c1c3f34c32431b107df69"'
             }
         }
-
-       
+      
         stage('Docker Build') {
             agent any
             steps {       

@@ -1,8 +1,9 @@
 ﻿C:\TFS\github.com\mabubakarriaz\CAPSrage\Program.cs
-C:\TFS\github.com\mabubakarriaz\CAPSrage\abs.txt
 C:\TFS\github.com\mabubakarriaz\CAPSrage\Dockerfile
 C:\TFS\github.com\mabubakarriaz\CAPSrage\Jenkinsfile
 C:\TFS\github.com\mabubakarriaz\CAPSrage\Properties\PublishProfiles\FolderProfile.pubxml
 C:\TFS\github.com\mabubakarriaz\CAPSrage\README.md
+C:\TFS\github.com\mabubakarriaz\CAPSrage\script.sh
 C:\TFS\github.com\mabubakarriaz\CAPSrage\_backup_2_Jenkinsfile copy
+C:\TFS\github.com\mabubakarriaz\CAPSrage\_backup_Jenkinsfile copy_2022
 C:\TFS\github.com\mabubakarriaz\CAPSrage\_bakcup_Jenkinsfile copy
