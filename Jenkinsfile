@@ -28,7 +28,7 @@ pipeline {
 
         stage('Source') {
             agent {
-                 docker { image 'mcr.microsoft.com/dotnet/sdk:6.0' }
+                 docker { image 'mcr.microsoft.com/dotnet/sdk:6.0-focal' }
             }
             steps {
                 echo "${env.PATH}"
@@ -40,7 +40,7 @@ pipeline {
         
         stage('Build') {
             agent {
-                 docker { image 'mcr.microsoft.com/dotnet/sdk:6.0' }
+                 docker { image 'mcr.microsoft.com/dotnet/sdk:6.0-focal' }
             }
             environment {
                     HOME = '/tmp'
@@ -54,21 +54,28 @@ pipeline {
 
         stage('Code Quality') {
             agent {
-                 docker { image 'mcr.microsoft.com/dotnet/sdk:6.0-focal' }
+                 docker { 
+                    image 'mcr.microsoft.com/dotnet/sdk:6.0-focal' 
+                    args '-v /opt/java/openjdk/bin/java:/usr/bin/java'
+                 }
             }
             environment {
                     HOME = '/tmp'
                     DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
-                    SCANNER_HOME = "$DOTNET_CLI_HOME/.dotnet/tools"
-                    PATH="$SCANNER_HOME:$PATH"
-            } 
+                    SCANNER_HOME = "$WORKSPACE$DOTNET_CLI_HOME/.dotnet/tools"
+            }
             steps {
-                echo "${env.PATH}"   
-                sh 'dotnet tool install -g dotnet-sonarscanner --version 5.7.1'
-                sh 'export PATH="$PATH:/$DOTNET_CLI_HOME/.dotnet/tools"'
-                sh 'dotnet sonarscanner begin /k:"CAPSrage" /d:sonar.host.url="http://20.29.34.154:9000"  /d:sonar.login="sqp_a46efcb94297400f5e4c1c3f34c32431b107df69"'
+                echo "${env.PATH}"  
+                //sh 'apt -y update'
+                //sh 'apt install --yes openjdk-11-jre'
+                sh 'java -version'
+                sh 'dotnet tool uninstall dotnet-sonarscanner --tool-path $SCANNER_HOME' 
+                sh 'dotnet tool install dotnet-sonarscanner --version 5.7.1 --tool-path $SCANNER_HOME'
+                sh 'dotnet tool list --tool-path $SCANNER_HOME' 
+                sh 'export PATH="$PATH:$SCANNER_HOME"'
+                sh '$SCANNER_HOME/dotnet-sonarscanner begin /k:"CAPSrage" /d:sonar.host.url="http://20.127.154.40:9000"  /d:sonar.login="sqp_0da7af113e62dfea63e1921a2d41b227b3763e76"'
                 sh 'dotnet build'
-                sh 'dotnet sonarscanner end /d:sonar.login="sqp_a46efcb94297400f5e4c1c3f34c32431b107df69"'
+                sh '$SCANNER_HOME/dotnet-sonarscanner end /d:sonar.login="sqp_0da7af113e62dfea63e1921a2d41b227b3763e76"'
             }
         }
       
