@@ -55,8 +55,7 @@ pipeline {
         stage('Code Quality') {
             agent {
                  docker { 
-                    image 'mcr.microsoft.com/dotnet/sdk:6.0-focal' 
-                    //args '-v /opt/java/openjdk/bin/java:/usr/bin/java'
+                    image 'abubakarriaz/dotnet-sdk:6.0-focal-jre-11'
                  }
             }
             environment {
@@ -66,16 +65,13 @@ pipeline {
             }
             steps {
                 echo "${env.PATH}"  
-                //sh 'apt -y update'
-                //sh 'apt install --yes openjdk-11-jre'
-                //sh 'java -version'
-                sh 'dotnet tool uninstall dotnet-sonarscanner --tool-path $SCANNER_HOME' 
+                //sh 'dotnet tool uninstall dotnet-sonarscanner --tool-path $SCANNER_HOME' 
                 sh 'dotnet tool install dotnet-sonarscanner --version 5.7.1 --tool-path $SCANNER_HOME'
                 sh 'dotnet tool list --tool-path $SCANNER_HOME' 
                 sh 'export PATH="$PATH:$SCANNER_HOME"'
-                sh '$SCANNER_HOME/dotnet-sonarscanner begin /k:"CAPSrage" /d:sonar.host.url="http://20.127.154.40:9000"  /d:sonar.login="sqp_0da7af113e62dfea63e1921a2d41b227b3763e76"'
+                sh '$SCANNER_HOME/dotnet-sonarscanner begin /k:"CAPSrage" /d:sonar.host.url="http://20.15.204.53:9000"  /d:sonar.login="sqp_aa175b0b08e2d771e72b3add648abd898c9781e6"'
                 sh 'dotnet build'
-                sh '$SCANNER_HOME/dotnet-sonarscanner end /d:sonar.login="sqp_0da7af113e62dfea63e1921a2d41b227b3763e76"'
+                sh '$SCANNER_HOME/dotnet-sonarscanner end /d:sonar.login="sqp_aa175b0b08e2d771e72b3add648abd898c9781e6"'
             }
         }
       
