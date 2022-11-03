@@ -65,7 +65,7 @@ pipeline {
             }
             steps {
                 echo "${env.PATH}"  
-                //sh 'dotnet tool uninstall dotnet-sonarscanner --tool-path $SCANNER_HOME' 
+                sh 'dotnet tool uninstall dotnet-sonarscanner --tool-path $SCANNER_HOME' 
                 sh 'dotnet tool install dotnet-sonarscanner --version 5.7.1 --tool-path $SCANNER_HOME'
                 sh 'dotnet tool list --tool-path $SCANNER_HOME' 
                 sh 'export PATH="$PATH:$SCANNER_HOME"'
