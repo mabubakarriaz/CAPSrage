@@ -1,4 +1,4 @@
-# CAPS Rage
+# CAPS Rage 
 
 A simple .net console app to output strings into capital letters. Type exit to end.
 
@@ -41,3 +41,5 @@ publish .net artifacts and docker image is archived
 ## script file
 
 shell is used to setup pipeline and VM configurations.
+
+-- text changes
