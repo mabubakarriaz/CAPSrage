@@ -42,3 +42,4 @@ publish .net artifacts and docker image is archived
 
 shell is used to setup pipeline and VM configurations.
 
+--ftstd
